@@ -25,9 +25,12 @@ class ExempleBloc extends Bloc<ExempleEvent, ExempleState> {
       "Fernando Alexande Wahl",
       "Pai",
       "Marido",
-      "Desenvolvvedor",
+      "Desenvolvvedor Java",
+      "Desenvolvvedor Flutter",
+      "Desenvolvvedor Backend",
     ];
 
+    await Future.delayed(const Duration(seconds: 4));
     emit(ExempleStateData(names: names));
   }
 }
