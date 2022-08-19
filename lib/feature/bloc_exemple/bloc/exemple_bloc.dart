@@ -11,8 +11,24 @@ part 'exemple_state.dart';
 
 class ExempleBloc extends Bloc<ExempleEvent, ExempleState> {
   ExempleBloc() : super(ExempleInitial()) {
-    //mapeando os eventos
+    //mapeando os eventos - Precisa ter isso se não não invoca a execução do metodo
     on<ExempleFindNameEvent>(_findNames);
+    on<ExempleRemoveNameEvent>(_removeNames);
+  }
+
+  FutureOr<void> _removeNames(
+    ExempleRemoveNameEvent event,
+    Emitter<ExempleState> emit,
+  ) {
+    
+    final stateExemple = state;
+    if(stateExemple is ExempleStateData){
+      final names = [...stateExemple.names]; // basicamente duplica a lista e mostra sempre a lista atual
+      names.retainWhere((element) => element != event.name);
+      emit(ExempleStateData(names: names));
+      
+    }
+
   }
 
   //Evento para Buscar nomes ao iniciar a tela
@@ -20,7 +36,6 @@ class ExempleBloc extends Bloc<ExempleEvent, ExempleState> {
     ExempleFindNameEvent event,
     Emitter<ExempleState> emit,
   ) async {
-
     final names = [
       "Fernando Alexande Wahl",
       "Pai",
