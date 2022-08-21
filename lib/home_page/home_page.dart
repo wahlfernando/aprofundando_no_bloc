@@ -8,32 +8,35 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: const Text('Bloc a Fundo')),
+        title: const Center(child: Text('Bloc a Fundo')),
       ),
       body: SafeArea(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ButtonCard(
-                  onTap: () {
-                    Navigator.of(context).pushNamed("/bloc/exemple");
-                  },
-                  text: "Exemplo"),
-              ButtonCard(onTap: () {}, text: "Exemplo Freezed")
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ButtonCard(onTap: () {}, text: "Contact"),
-              ButtonCard(onTap: () {}, text: "Contact Cubit")
-            ],
-          )
-        ],
-      )),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ButtonCard(
+                    onTap: () {
+                      Navigator.of(context).pushNamed("/bloc/exemple");
+                    },
+                    text: "Exemplo"),
+                ButtonCard(onTap: () {
+                  Navigator.of(context).pushNamed("/bloc/exemple/freezed");
+                }, text: "Exemplo Freezed")
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ButtonCard(onTap: () {}, text: "Contact"),
+                ButtonCard(onTap: () {}, text: "Contact Cubit")
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 }

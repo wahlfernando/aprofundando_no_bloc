@@ -14,6 +14,22 @@ class ExempleBloc extends Bloc<ExempleEvent, ExempleState> {
     //mapeando os eventos - Precisa ter isso se não não invoca a execução do metodo
     on<ExempleFindNameEvent>(_findNames);
     on<ExempleRemoveNameEvent>(_removeNames);
+    on<ExempleAddNameEvent>(_addNames);
+  }
+
+  FutureOr<void> _addNames(
+      ExempleAddNameEvent event,
+      Emitter<ExempleState> emit,
+      ) {
+
+    final stateExemple = state;
+    if(stateExemple is ExempleStateData){
+      final names = [...stateExemple.names]; // basicamente duplica a lista e mostra sempre a lista atual
+      names.add(event.name);
+      emit(ExempleStateData(names: names));
+
+    }
+
   }
 
   FutureOr<void> _removeNames(

@@ -9,10 +9,10 @@ class BlocExemple extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Center(child: const Text('Bloc exemple')),
+          title: const Center(child: Text('Bloc exemple')),
         ),
         body: BlocListener<ExempleBloc, ExempleState>(
-          //listenWhen tem o poder de tomar uma desciusão de quando o pedaço do código vai re-buildar, somente quando tiver uma descisão
+          //listenWhen tem o poder de tomar uma descisão de quando o pedaço do código vai re-buildar, somente quando tiver uma descisão
           listenWhen: ((previous, current) {
             //ex:
             if(previous is ExempleInitial && current is ExempleStateData){
@@ -50,7 +50,7 @@ class BlocExemple extends StatelessWidget {
                 }
                 return const SizedBox.shrink();
               }, listener: (context, state) {
-                print("Alteração executada");
+                debugPrint("Alteração executada");
               }),
               BlocSelector<ExempleBloc, ExempleState, List<String>>(
                   selector: (state) {
@@ -65,7 +65,9 @@ class BlocExemple extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return ListTile(
                       onTap: () {
-                        context.read<ExempleBloc>().add(ExempleRemoveNameEvent(name: names[index]));
+                        // context.read<ExempleBloc>().add(ExempleRemoveNameEvent(name: names[index]));
+                        context.read<ExempleBloc>().add(ExempleAddNameEvent(name: "String add adicionado"));
+
                       },
                       title: Text(names[index]),
                     );
