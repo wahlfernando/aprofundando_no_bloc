@@ -30,7 +30,9 @@ class HomePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ButtonCard(onTap: () {}, text: "Contact"),
+                ButtonCard(onTap: () {
+                  Navigator.of(context).pushNamed("/contacts/list");
+                }, text: "Contact"),
                 ButtonCard(onTap: () {}, text: "Contact Cubit")
               ],
             )
