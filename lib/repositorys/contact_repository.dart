@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:aprofundamento_no_bloc/repositorys/contact_model.dart';
 
-class ContactRepository {
+class ContactsRepository {
 
   ///Todos as formas de Crud estão sendo realizadas da forma mais simpes nese versão 1.0
   ///Na versão 2.0 será refeito para utilização do pacote http e com retornos de erros corretos
 
   Future<List<ContactModel>> findall() async{
-    final response = await Dio().get('http://10.0.2.2:3031/localhost/contacts');
+    final response = await Dio().get('http://192.168.1.9:3031/contacts');
 
     return response.data?.map<ContactModel>((contacts) => ContactModel.fromMap(contacts)).toList();
   }

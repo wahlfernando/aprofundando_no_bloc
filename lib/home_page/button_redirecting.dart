@@ -20,13 +20,14 @@ class ButtonCard extends StatelessWidget {
           child: Ink(
             decoration: BoxDecoration(
                 color: Colors.white70, borderRadius: BorderRadius.circular(20)),
-            width: 180,
-            height: 200,
+            width: 150,
+            height: 150,
             child: Center(
-                child: Text(
-              text!,
-              style: Theme.of(context).textTheme.headline6,
-            )),
+              child: Text(
+                text!,
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            ),
           ),
         ),
       ),
