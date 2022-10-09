@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:aprofundamento_no_bloc/repositorys/contact_repository.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../repositorys/contact_model.dart';
@@ -19,10 +22,17 @@ class ContactListBloc extends Bloc<ContactListEvent, ContactListState> {
     on<_ContactListEventFindAll>(_findAll);
   }
 
-  Future<void> _findAll(
-      _ContactListEventFindAll event, Emitter<ContactListState> emit) async {
+  Future<void> _findAll(_ContactListEventFindAll event, Emitter<ContactListState> emit) async {
 
-    final contacts = await _repository.findall();
-    emit(ContactListState.data(contacts: contacts));
+    try {
+      emit(ContactListState.loading());
+      final contacts = await _repository.findall();
+      await Future.delayed(const Duration(seconds: 1));
+
+      emit(ContactListState.data(contacts: contacts));
+    } catch (e, s) {
+      debugPrint(e.toString());
+      emit(ContactListState.error(error: "Erro ao buscar contatos"));
+    }
   }
 }

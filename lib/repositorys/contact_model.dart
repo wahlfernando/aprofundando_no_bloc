@@ -1,5 +1,5 @@
 class ContactModel {
-  final String? id;
+  final int? id;
   final String name;
   final String email;
 
@@ -29,12 +29,12 @@ class ContactModel {
   }
 
   ContactModel copyWith({
-    String? id,
+    int? id,
     String? name,
     String? email,
   }) {
     return ContactModel(
-      id: id ?? this.id,
+      id: id! ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
     );
@@ -50,7 +50,7 @@ class ContactModel {
 
   factory ContactModel.fromMap(Map<String, dynamic> map) {
     return ContactModel(
-      id: map['id'] as String,
+      id: map['id'] as int,
       name: map['name'] as String,
       email: map['email'] as String,
     );

@@ -7,6 +7,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blueGrey,
       appBar: AppBar(
         title: const Center(child: Text('Bloc a Fundo')),
       ),
@@ -24,7 +25,7 @@ class HomePage extends StatelessWidget {
                     text: "Exemplo"),
                 ButtonCard(onTap: () {
                   Navigator.of(context).pushNamed("/bloc/exemple/freezed");
-                }, text: "Exemplo Freezed")
+                }, text: "Ex. Freezed")
               ],
             ),
             Row(
