@@ -1,21 +1,29 @@
-import 'package:aprofundamento_no_bloc/feature/contacts/list/bloc/contact_list_bloc.dart';
-import 'package:aprofundamento_no_bloc/feature/contacts/register/bloc/contact_register_bloc.dart';
-import 'package:bloc/bloc.dart';
+import 'package:aprofundamento_no_bloc/feature/contacts/update/bloc/bloc/contact_update_bloc.dart';
+import 'package:aprofundamento_no_bloc/repositorys/contact_model.dart';
+import 'package:aprofundamento_no_bloc/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:aprofundamento_no_bloc/widgets/loader.dart';
 
-class ContactRegisterPage extends StatefulWidget {
-  const ContactRegisterPage({Key? key}) : super(key: key);
+class ContactUpdatePage extends StatefulWidget {
+  final ContactModel contact;
+
+  const ContactUpdatePage({Key? key, required this.contact}) : super(key: key);
 
   @override
-  State<ContactRegisterPage> createState() => _ContactRegisterPageState();
+  State<ContactUpdatePage> createState() => _ContactUpdatePageState();
 }
 
-class _ContactRegisterPageState extends State<ContactRegisterPage> {
+class _ContactUpdatePageState extends State<ContactUpdatePage> {
   final _formKey = GlobalKey<FormState>();
-  final _nameEC = TextEditingController();
-  final _emailEC = TextEditingController();
+  late final TextEditingController _nameEC;
+  late final TextEditingController _emailEC;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameEC = TextEditingController(text: widget.contact.name);
+    _emailEC = TextEditingController(text: widget.contact.email);
+  }
 
   @override
   void dispose() {
@@ -28,16 +36,9 @@ class _ContactRegisterPageState extends State<ContactRegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Register'),
+        title: const Text('Contact Update'),
       ),
-      body: BlocListener<ContactRegisterBloc, ContactRegisterState>(
-        listenWhen: (previous, current) {
-          return current.maybeWhen(
-            success: () => true,
-            error: (_) => true,
-            orElse: () => false,
-          );
-        },
+      body: BlocListener<ContactUpdateBloc, ContactUpdateState>(
         listener: (context, state) {
           state.whenOrNull(
             success: () => Navigator.of(context).pop(),
@@ -84,8 +85,9 @@ class _ContactRegisterPageState extends State<ContactRegisterPage> {
                   onPressed: () {
                     final validate = _formKey.currentState?.validate() ?? false;
                     if (validate) {
-                      context.read<ContactRegisterBloc>().add(
-                            ContactRegisterEvent.save(
+                      context.read<ContactUpdateBloc>().add(
+                            ContactUpdateEvent.save(
+                              id: widget.contact.id!,
                               name: _nameEC.text,
                               email: _emailEC.text,
                             ),
@@ -94,7 +96,7 @@ class _ContactRegisterPageState extends State<ContactRegisterPage> {
                   },
                   child: const Text('Salvar'),
                 ),
-                Loader<ContactRegisterBloc, ContactRegisterState>(
+                Loader<ContactUpdateBloc, ContactUpdateState>(
                   selector: (state) {
                     return state.maybeWhen(
                         orElse: () => false, loading: () => true);

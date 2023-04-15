@@ -2,10 +2,13 @@ import 'package:aprofundamento_no_bloc/feature/bloc_exemple/bloc/exemple_bloc.da
 import 'package:aprofundamento_no_bloc/feature/bloc_exemple/bloc_exemple.dart';
 import 'package:aprofundamento_no_bloc/feature/bloc_exemple/bloc_freezed/exemple_freezed_bloc.dart';
 import 'package:aprofundamento_no_bloc/feature/bloc_exemple/bloc_freezed_exemple.dart';
-import 'package:aprofundamento_no_bloc/feature/contacts/contact_update_page/contact_update_page.dart';
+import 'package:aprofundamento_no_bloc/feature/contacts/update/bloc/bloc/contact_update_bloc.dart';
+import 'package:aprofundamento_no_bloc/feature/contacts/update/contact_update_page.dart';
 import 'package:aprofundamento_no_bloc/feature/contacts/list/bloc/contact_list_bloc.dart';
 import 'package:aprofundamento_no_bloc/feature/contacts/list/contacts_list_page.dart';
+import 'package:aprofundamento_no_bloc/feature/contacts/register/bloc/contact_register_bloc.dart';
 import 'package:aprofundamento_no_bloc/feature/contacts/register/contact_register_page.dart';
+import 'package:aprofundamento_no_bloc/repositorys/contact_model.dart';
 import 'package:aprofundamento_no_bloc/repositorys/contact_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,9 +53,21 @@ class MyApp extends StatelessWidget {
                   ..add(const ContactListEvent.findAll()),
                 child: const ContactsListPage(),
               ),
-          '/contacts/register': (context) => const ContactRegisterPage(),
-          '/contact/update': (context) => const ContactUpdatePage(),
-
+          '/contacts/register': (context) => BlocProvider(
+                create: (context) => ContactRegisterBloc(
+                  contactsRepository: context.read(),
+                ),
+                child: const ContactRegisterPage(),
+              ),
+          '/contacts/update': (context) {
+            final contact = ModalRoute.of(context)!.settings.arguments as ContactModel;
+            return BlocProvider(
+                create: (context) => ContactUpdateBloc(
+                  contactsRepository: context.read(),
+                ),
+                child: ContactUpdatePage(contact: contact),
+              );
+          },
         },
       ),
     );

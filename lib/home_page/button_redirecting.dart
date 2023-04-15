@@ -4,8 +4,11 @@ class ButtonCard extends StatelessWidget {
   final Function()? onTap;
   final String? text;
 
-  const ButtonCard({Key? key, required this.onTap, required this.text})
-      : super(
+  const ButtonCard({
+    Key? key,
+    required this.onTap,
+    required this.text,
+  }) : super(
           key: key,
         );
 
@@ -19,13 +22,15 @@ class ButtonCard extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Ink(
             decoration: BoxDecoration(
-                color: Colors.white70, borderRadius: BorderRadius.circular(20)),
-            width: 150,
+              color: Colors.white70,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            width: MediaQuery.of(context).size.width * 0.4,
             height: 150,
             child: Center(
               child: Text(
                 text!,
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
           ),

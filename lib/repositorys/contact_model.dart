@@ -3,8 +3,6 @@ class ContactModel {
   final String name;
   final String email;
 
-//<editor-fold desc="Data Methods">
-
   const ContactModel({
     this.id,
     required this.name,
@@ -34,7 +32,7 @@ class ContactModel {
     String? email,
   }) {
     return ContactModel(
-      id: id! ?? this.id,
+      id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
     );
@@ -42,9 +40,9 @@ class ContactModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': this.id,
-      'name': this.name,
-      'email': this.email,
+      'id': id,
+      'name': name,
+      'email': email,
     };
   }
 
@@ -56,5 +54,4 @@ class ContactModel {
     );
   }
 
-//</editor-fold>
 }

@@ -7,7 +7,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: const Color.fromARGB(255, 162, 187, 199),
       appBar: AppBar(
         title: const Center(child: Text('Bloc a Fundo')),
       ),

@@ -11,10 +11,11 @@ class ContactsListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: () {
           Navigator.pushNamed(context, '/contacts/register');
+          context.read<ContactListBloc>().add(const ContactListEvent.findAll());
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       appBar: AppBar(
         title: const Text('Contact List'),
@@ -32,7 +33,7 @@ class ContactsListPage extends StatelessWidget {
               SnackBar(
                 content: Text(
                   error,
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 ),
                 backgroundColor: Colors.red,
               ),
@@ -40,7 +41,8 @@ class ContactsListPage extends StatelessWidget {
           });
         },
         child: RefreshIndicator(
-          onRefresh: () async => context.read<ContactListBloc>()..add(const ContactListEvent.findAll()),
+          onRefresh: () async => context.read<ContactListBloc>()
+            ..add(const ContactListEvent.findAll()),
           child: CustomScrollView(
             slivers: [
               SliverFillRemaining(
@@ -64,13 +66,19 @@ class ContactsListPage extends StatelessWidget {
                       },
                       builder: (_, contacts) {
                         return ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: contacts.length,
                           itemBuilder: (context, index) {
                             final contact = contacts[index];
                             return ListTile(
-                              onTap: () {
-                                Navigator.pushNamed(context, '/contact/update');
+                              onTap: () async {
+                                await Navigator.pushNamed(
+                                    context, '/contacts/update',
+                                    arguments: contact);
+                                context.read<ContactListBloc>().add(
+                                      const ContactListEvent.findAll(),
+                                    );
                               },
                               title: Text(contact.name),
                               subtitle: Text(contact.email),
